@@ -15,7 +15,8 @@ module.exports = {
     'semi': 'off',
     'comma-dangle': 'off',
     'max-len': ['error', {code: 200}],
-    'require-jsdoc': 'off'
+    'require-jsdoc': 'off',
+    'linebreak-style': 'off'
   }
 }
 

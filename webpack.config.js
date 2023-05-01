@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
   const isProd = argv.mode === 'production'
   const isDev = !isProd
 
-  const filename = (ext) => `[name].${isProd ? '[contenthash]' : ''}.bundle.${ext}`
+  const filename = (ext) => `[name].${isProd ? '[content hash]' : ''}.bundle.${ext}`
 
   const plugins = () => {
     const base = [
