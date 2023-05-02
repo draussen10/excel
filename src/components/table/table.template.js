@@ -15,10 +15,10 @@ function createCol(col) {
 	`
 }
 
-function createRow(content, idx = -1) {
+function createRow(content, idx) {
 	return `
 	<div class="row">
-		<div class="row-info">${idx < 0 ? '' : idx+1}</div>
+		<div class="row-info">${idx ? idx : ''}</div>
 		<div class="row-data">${content}</div>
 	</div>
 	`
@@ -34,7 +34,7 @@ export function createTable(rowsCount = 15) {
 		.map(el => createCol(el))
 		.join('')
 
-	rows.push(createRow(cols))
+	rows.push(createRow(cols, null))
 
 	const cells = new Array(colsCount)
 		.fill('')
@@ -43,7 +43,12 @@ export function createTable(rowsCount = 15) {
 		.join('')
 
 	for (let i = 0; i < rowsCount; i++) {
-		rows.push(createRow(cells, i))
+		const cells = new Array(colsCount)
+			.fill('')
+			.map(createCell)
+			.join('')
+
+		rows.push(createRow(cells, i + 1))
 	}
 
 	return rows.join('')
