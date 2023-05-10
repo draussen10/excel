@@ -26,6 +26,6 @@ export class Excel {
 
 		this.components.forEach(component => component.init())
 
-		this.components.forEach(component => component.destroy())
+		// this.components.forEach(component => component.destroy())
 	}
 }
