@@ -3,22 +3,29 @@ const CODES = {
 	Z: 90
 }
 
-function createCell() {
+function createCell(_, col) { // _ - сам элемент, называем так, тк он нам не интересен
 	return `
-	<div class="cell" contenteditable spellcheck="false"></div>
+	<div class="cell" contenteditable spellcheck="false" data-col="${col}"></div>
 	`
 }
 
-function createCol(col) {
+function createCol(col, idx) {
 	return `
-		<div class="column">${col}</div>
+		<div class="column" data-type="resizable" data-col="${idx}">
+			${col}
+			<div class="col-resize" data-resize="col"></div>
+		</div>
 	`
 }
 
 function createRow(content, idx) {
+	const resizer = idx ? '<div class="row-resize" data-resize="row"></div>' : ''
 	return `
-	<div class="row">
-		<div class="row-info">${idx ? idx : ''}</div>
+	<div class="row" data-type="resizable">
+		<div class="row-info">
+			${idx ? idx : ''}
+			${resizer}
+		</div>
 		<div class="row-data">${content}</div>
 	</div>
 	`
@@ -31,7 +38,7 @@ export function createTable(rowsCount = 15) {
 	const cols = new Array(colsCount)
 		.fill('')
 		.map((el, idx) => String.fromCharCode(CODES.A + idx))
-		.map(el => createCol(el))
+		.map(createCol)
 		.join('')
 
 	rows.push(createRow(cols, null))
@@ -39,7 +46,7 @@ export function createTable(rowsCount = 15) {
 	const cells = new Array(colsCount)
 		.fill('')
 		.map((el, idx) => String.fromCharCode(CODES.A + idx))
-		.map((el, idx) => createCell())
+		.map(createCell)
 		.join('')
 
 	for (let i = 0; i < rowsCount; i++) {
