@@ -3,10 +3,17 @@ const CODES = {
 	Z: 90
 }
 
-function createCell(_, col) { // _ - сам элемент, называем так, тк он нам не интересен
-	return `
-	<div class="cell" contenteditable spellcheck="false" data-col="${col}"></div>
-	`
+function createCell(row) { // Пример замыкания - в данном случае для красоты
+	return function(_, col) {
+		return `
+ 			<div class="cell" 
+				contenteditable 
+				spellcheck="false" 
+				data-col="${col}"
+				data-id="${row}-${col}"
+ 			></div>
+ 		`
+	}
 }
 
 function createCol(col, idx) {
@@ -49,13 +56,14 @@ export function createTable(rowsCount = 15) {
 		.map(createCell)
 		.join('')
 
-	for (let i = 0; i < rowsCount; i++) {
+	for (let row = 0; row < rowsCount; row++) {
 		const cells = new Array(colsCount)
 			.fill('')
-			.map(createCell)
+			// .map((_, col) => createCell(row, col)) - не самый красивый способ
+			.map(createCell(row)) // Красиво!
 			.join('')
 
-		rows.push(createRow(cells, i + 1))
+		rows.push(createRow(cells, row + 1))
 	}
 
 	return rows.join('')

@@ -17,12 +17,12 @@ module.exports = {
 		'max-len': ['error', {code: 250}],
 		'require-jsdoc': 'off',
 		'linebreak-style': 'off',
-		'indent': ['error', 'tab'],
+		'indent': 'off',
 		'no-tabs': ['error', {allowIndentationTabs: true}],
 		'no-unused-vars': 'off',
 		'arrow-parens': ['error', 'as-needed'],
 		'operator-linebreak': 'off',
-		'no-trailing-spaces': 'off'
+		'no-trailing-spaces': 'off',
 	}
 }
 
