@@ -100,7 +100,7 @@ class Dom {
 		return this
 	}
 	removeClass(className) {
-		return this.$el.classList.remove(className)
+		this.$el.classList.remove(className)
 		return this
 	}
 }
