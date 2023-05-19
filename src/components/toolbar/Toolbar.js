@@ -1,23 +1,45 @@
-import {ExcelComponent} from '@/core/ExcelComponent'
+import {createToolbar} from './toolbar.template'
+import {$} from '@/core/dom'
+import {ExcelStateComponent} from '@/core/ExcelStateComponent'
+import {initialState} from '@/redux/initialState'
 
-export class Toolbar extends ExcelComponent {
+export class Toolbar extends ExcelStateComponent {
 	static className = 'excel__toolbar'
 
 	constructor($root, options) {
 		super($root, {
 			name: 'Toolbar',
+			listeners: ['click'],
 			...options
 		})
 	}
 
+	prepare() {
+		const initialState = {
+			textAlign: 'left',
+			fontWeight: 'normal',
+			textDecoration: 'none',
+			fontStyle: 'normal'
+		}
+		this.initState(initialState)
+	}
+
+	get template() {
+		return createToolbar(this.state)
+	}
+
 	toHTML() {
-		return `
-		<span class="material-icons button">format_align_left</span>
-		<span class="material-icons button">format_align_center</span>
-		<span class="material-icons button">format_align_right</span>
-		<span class="material-icons button">format_bold</span>
-		<span class="material-icons button">format_italic</span>
-		<span class="material-icons button">format_underline</span>
-		`
+		return this.template
+	}
+
+	onClick(e) {
+		const $target = $(e.target)
+		if ($target.data.type === 'button') {
+			const value = JSON.parse($target.data.value)
+			const key = Object.keys(value)[0]
+			this.setState({[key]: value[key]})
+
+			console.log(this.state)
+		}
 	}
 }
